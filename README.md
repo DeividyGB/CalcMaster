@@ -1,40 +1,40 @@
 # CalcMaster
-Projeto POO
-Telas
-1 - Login
-2 - Cadastro
-3 - Recuperar senha
-4 - Tela inicial (calculadora)
-5 - Histórico de contas (Do usuário)
+Projeto POO<br><br>
+Telas<br>
+1 - Login <br>
+2 - Cadastro<br>
+3 - Recuperar senha<br>
+4 - Tela inicial (calculadora)<br>
+5 - Histórico de contas (Do usuário)<br>
 
-1 - Login
-*Caixas de Texto*
+1 - Login<br>
+*Caixas de Texto*<br>
 txtLogin
 txtPassword
 
-*Botões*
+*Botões*<br>
 btnLogin
 btnRegister
 bntForget
 
-2 - Cadastro
-*Caixas de Texto*
+2 - Cadastro<br>
+*Caixas de Texto*<br>
 txtName
 txtEmail
 txtCPF
 txtRegPassword
 
-*Botões*
+*Botões*<br>
 btnReg
 
-3 - Recuperar Senha
-*Caixas de texto*
+3 - Recuperar Senha<br>
+*Caixas de texto*<br>
 txtRecName
 txtRecEmail
 txtRecCPF
 txtRecPassword
 
-*Botões*
+*Botões*<br>
 bntRec
 
 
