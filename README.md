@@ -37,6 +37,23 @@ txtRecPassword
 *Botões*<br>
 bntRec
 
+4 - Tela Inicial (Calculadora)<br>
+*Caixas de texto*<br>
+txtNum1
+txtNum2
+txtResul
+
+*Botões*<br>
+btnPlus
+btnSquare
+btnMult
+btnSubtract
+btnDivision
+btnRaizSquare
+
+
+
+
 
 
 
