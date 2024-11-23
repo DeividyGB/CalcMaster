@@ -1,8 +1,16 @@
 package org.calcmaster;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 /*@designer diogo @author Skullius*/
+
 public class TelaInicial extends javax.swing.JFrame {
-    public TelaInicial() {
+    
+    private CalcMasterConecta calcCon;
+    public TelaInicial() throws ClassNotFoundException {
+    calcCon = new CalcMasterConecta();
+    
+    //public TelaInicial() {
         initComponents();
     }
     @SuppressWarnings("unchecked")
@@ -12,7 +20,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtN1 = new javax.swing.JTextField();
         txtN2 = new javax.swing.JTextField();
-        txtRes = new javax.swing.JTextField();
+        txtRes1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -24,16 +32,20 @@ public class TelaInicial extends javax.swing.JFrame {
         btnPow2 = new javax.swing.JButton();
         btnSquare = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        txtRes2 = new javax.swing.JTextField();
+        btnHist = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Calculadora"));
 
+        txtRes1.setEditable(false);
+
         jLabel1.setText("Número 1");
 
         jLabel2.setText("Número 2");
 
-        jLabel3.setText("Resultado");
+        jLabel3.setText("Resultados");
 
         btnPlus.setText("+");
         btnPlus.addActionListener(new java.awt.event.ActionListener() {
@@ -92,49 +104,65 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        txtRes2.setEditable(false);
+
+        btnHist.setText("Histórico");
+        btnHist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(45, 45, 45))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtN2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addComponent(txtRes, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel1)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel2)
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtN2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtRes1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRes2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDivision, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnPow2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnSquare, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnSubtract, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnDivision, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnSquare, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnMult, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPow2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(92, 92, 92))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnHist))))))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnClear, btnExit, btnHist});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -147,7 +175,8 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtN1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtN2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRes1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRes2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPlus)
@@ -156,7 +185,8 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDivision)
-                    .addComponent(btnSubtract))
+                    .addComponent(btnSubtract)
+                    .addComponent(btnHist))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSquare)
@@ -185,21 +215,32 @@ public class TelaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
-        double n1, n2, r;
-        n1 = Double.parseDouble(txtN1.getText());
-        n2 = Double.parseDouble(txtN2.getText());
-        r = n1 - n2;
-        txtRes.setText(String.valueOf(r));
-    }//GEN-LAST:event_btnSubtractActionPerformed
+    private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
+        try {
+            new HistoricodeContas().setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnHistActionPerformed
 
-    private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
-        double n1, n2, r;
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtN1.setText("");
+        txtN2.setText("");
+        txtRes1.setText("");
+        txtRes2.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSquareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSquareActionPerformed
+        double n1, n2, r1, r2;
         n1 = Double.parseDouble(txtN1.getText());
         n2 = Double.parseDouble(txtN2.getText());
-        r = n1 + n2;
-        txtRes.setText(String.valueOf(r));
-    }//GEN-LAST:event_btnPlusActionPerformed
+        r1 = Math.sqrt(n1);
+        r2 = Math.sqrt(n2);
+        txtRes1.setText(String.valueOf(r1));
+        txtRes2.setText(String.valueOf(r2));
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "2√",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
+    }//GEN-LAST:event_btnSquareActionPerformed
 
     private void btnPow2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPow2ActionPerformed
         double n1, n2, r1 = 1, r2 = 1;
@@ -211,15 +252,25 @@ public class TelaInicial extends javax.swing.JFrame {
         for(int i = 0; i < 2; i++){
             r2 *= n2;
         }
-        txtRes.setText(String.valueOf(r1 + " , " + r2));
+        txtRes1.setText(String.valueOf(r1));
+        txtRes2.setText(String.valueOf(r2));
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "^2",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
     }//GEN-LAST:event_btnPow2ActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultActionPerformed
         double n1, n2, r;
         n1 = Double.parseDouble(txtN1.getText());
         n2 = Double.parseDouble(txtN2.getText());
         r = n1 * n2;
-        txtRes.setText(String.valueOf(r));
+        txtRes1.setText(String.valueOf(r));
+        txtRes2.setText("0");
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "*",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
     }//GEN-LAST:event_btnMultActionPerformed
 
     private void btnDivisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisionActionPerformed
@@ -230,28 +281,34 @@ public class TelaInicial extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(TelaInicial.this, "Cannot divide by zero.", "Warning", JOptionPane.WARNING_MESSAGE);
         }else{
             r = n1 / n2;
-            txtRes.setText(String.valueOf(r));
+            txtRes1.setText(String.valueOf(r));
         }
+        txtRes2.setText("0");
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "/",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
     }//GEN-LAST:event_btnDivisionActionPerformed
 
-    private void btnSquareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSquareActionPerformed
-        double n1, n2, r1, r2;
+    private void btnSubtractActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtractActionPerformed
+        double n1, n2, r;
         n1 = Double.parseDouble(txtN1.getText());
         n2 = Double.parseDouble(txtN2.getText());
-        r1 = Math.sqrt(n1);
-        r2 = Math.sqrt(n2);
-        txtRes.setText(String.valueOf(r1 + " , " + r2));
-    }//GEN-LAST:event_btnSquareActionPerformed
+        r = n1 - n2;
+        txtRes1.setText(String.valueOf(r));
+        txtRes2.setText("0");
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "-",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
+    }//GEN-LAST:event_btnSubtractActionPerformed
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        txtN1.setText("");
-        txtN2.setText("");
-        txtRes.setText("");
-    }//GEN-LAST:event_btnClearActionPerformed
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btnExitActionPerformed
+    private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
+        double n1, n2, r;
+        n1 = Double.parseDouble(txtN1.getText());
+        n2 = Double.parseDouble(txtN2.getText());
+        r = n1 + n2;
+        txtRes1.setText(String.valueOf(r));
+        txtRes2.setText("0");
+        calcCon.addHistory(Double.parseDouble(txtN1.getText()), Double.parseDouble(txtN2.getText()), "+",
+                Double.parseDouble(txtRes1.getText()), Double.parseDouble(txtRes2.getText()));
+    }//GEN-LAST:event_btnPlusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,7 +340,11 @@ public class TelaInicial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaInicial().setVisible(true);
+                try {
+                    new TelaInicial().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -292,6 +353,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDivision;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnHist;
     private javax.swing.JButton btnMult;
     private javax.swing.JButton btnPlus;
     private javax.swing.JButton btnPow2;
@@ -303,6 +365,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtN1;
     private javax.swing.JTextField txtN2;
-    private javax.swing.JTextField txtRes;
+    private javax.swing.JTextField txtRes1;
+    private javax.swing.JTextField txtRes2;
     // End of variables declaration//GEN-END:variables
 }

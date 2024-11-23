@@ -1,8 +1,8 @@
 package org.calcmaster;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+/*@designer diogo @author Skullius*/
 
 public class Cadastro extends javax.swing.JFrame {
     
@@ -154,7 +154,12 @@ public class Cadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        
+        try {
+            new Menu().setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Cadastro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
     }//GEN-LAST:event_btnBackActionPerformed
 
     /**

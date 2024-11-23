@@ -10,8 +10,10 @@ public class CalcMasterConecta {
     private Connection connection = null;
     
     private PreparedStatement addUser = null;
-    /*private PreparedStatement logIn = null;*/
+    private PreparedStatement logIn = null;
     private PreparedStatement recoverPass = null;
+    private PreparedStatement histAdd = null;
+    private PreparedStatement histLog = null;
     
     public CalcMasterConecta () throws ClassNotFoundException
     {
@@ -19,16 +21,24 @@ public class CalcMasterConecta {
         {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             connection = DriverManager.getConnection (URL, USERNAME, PASSWORD);
+            
             addUser = connection.prepareStatement (
                     "INSERT INTO CALC.USUARIO (NOME, EMAIL, CPF, SENHA) "
                             + "VALUES (?, ?, ?, ?)");
             
-            /*logIn = connection.prepareStatement(
+            logIn = connection.prepareStatement(
                     "SELECT EMAIL, SENHA FROM CALC.USUARIO "
-                            + "WHERE EMAIL = ? AND SENHA = ?" );*/
+                            + "WHERE EMAIL = ? AND SENHA = ?" );
             
             recoverPass = connection.prepareStatement(
                     "SELECT * FROM CALC.USUARIO WHERE CPF = ?" );
+            
+            histAdd = connection.prepareStatement (
+                    "INSERT INTO CALC.HISTORICO (N1, N2, OP, R1, R2) "
+                            + "VALUES (?, ?, ?, ?, ?)");
+            
+            histLog = connection.prepareStatement(
+                    "SELECT * FROM CALC.HISTORICO" );
             
         }
         catch (SQLException sqlException)
@@ -55,15 +65,35 @@ public class CalcMasterConecta {
         return result;
     }
     
-    /*Needs More Research*/
-    /*public List <CalcMasterSource> getEmail (String email, String senha)
+    public List <CalcMasterLogin> getLogin (String email, String senha)
     {
-        List<CalcMasterSource> resultados = null;
+        List<CalcMasterLogin> resultados = null;
         ResultSet resultSet = null;
         try {
             logIn.setString(1, email);
             logIn.setString(2, senha);
             resultSet = logIn.executeQuery();
+            resultados = new ArrayList <CalcMasterLogin>();
+            while (resultSet.next())
+            {
+                resultados.add(new CalcMasterLogin(
+                resultSet.getString("Email"),
+                resultSet.getString("Senha")));
+            }
+        }catch (SQLException sqlException)
+        {
+            sqlException.printStackTrace();
+            close();
+        }
+        return resultados;
+    }
+    
+    public List <CalcMasterSource> getSenhaRec (String text)
+    {
+        List<CalcMasterSource> resultados = null;
+        ResultSet resultSet = null;
+        try {
+            resultSet = recoverPass.executeQuery();
             resultados = new ArrayList <CalcMasterSource>();
             while (resultSet.next())
             {
@@ -80,24 +110,43 @@ public class CalcMasterConecta {
             close();
         }
         return resultados;
-    }*/
+    }
     
-    public List <CalcMasterSource> getSenhaRec (String senha)
+    public int addHistory(Double n1, Double n2, String op, Double r1, Double r2)
     {
-        List<CalcMasterSource> resultados = null;
+        int result = 0;
+        try{
+            histAdd.setDouble(1, n1);
+            histAdd.setDouble(2, n2);
+            histAdd.setString(3, op);
+            histAdd.setDouble(4, r1);
+            histAdd.setDouble(5, r2);
+            result = histAdd.executeUpdate();
+        }
+        catch (SQLException sqlException)
+        {
+            sqlException.printStackTrace();
+            close();
+        }
+        return result;
+    }
+    
+    public List <CalcMasterHistory> getHistorico ()
+    {
+        List<CalcMasterHistory> resultados = null;
         ResultSet resultSet = null;
         try {
-            recoverPass.setString(1, senha);
-            resultSet = recoverPass.executeQuery();
-            resultados = new ArrayList <CalcMasterSource>();
+            resultSet = histLog.executeQuery();
+            resultados = new ArrayList <CalcMasterHistory>();
             while (resultSet.next())
             {
-                resultados.add(new CalcMasterSource(
+                resultados.add(new CalcMasterHistory(
                 resultSet.getInt("ID"),
-                resultSet.getString("Nome"),
-                resultSet.getString("Email"),
-                resultSet.getString("CPF"),
-                resultSet.getString("Senha")));
+                resultSet.getDouble("N1"),
+                resultSet.getDouble("N2"),
+                resultSet.getString("OP"),
+                resultSet.getDouble("R1"),
+                resultSet.getDouble("R2")));
             }
         }catch (SQLException sqlException)
         {
